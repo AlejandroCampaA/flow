@@ -211,6 +211,3 @@ Una sola gráfica de tiempo (`components/GraficaTiempo.tsx`) sirve a las tres pe
   promedio; también «Por concepto» y «Descuentos» apilados. La liquidación del ahorro se marca aparte.
 - **Para revisar** es una campana en el encabezado (`components/Avisos.tsx`).
 - En Cuentas, el ícono de cada movimiento es el botón para cambiar su categoría.
-#   f l o w 
- 
- 
