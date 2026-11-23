@@ -3,6 +3,25 @@
 App de escritorio (Electron + React + TypeScript + Tailwind + Recharts). No levanta servidor ni usa localhost.
 Lee tus recibos de nómina (PDF/XML) y los estados de cuenta de Santander (PDF, con OCR local).
 
+## Descargar (sin compilar nada)
+
+Ve a la pestaña **Releases** del repositorio y baja `Flujo-<versión>-Windows.zip`. Extráelo completo y:
+
+- **Instalar:** doble clic en `Instalar Flujo.cmd` (accesos directos en escritorio y menú Inicio), o
+- **Sin instalar:** abre `win-unpacked\Flujo.exe`.
+
+Si Windows avisa «protegió su PC»: *Más información → Ejecutar de todas formas* (el programa no está firmado).
+
+**Publicar una versión nueva** (desde la raíz, con `package.json` en la versión nueva):
+
+```bash
+git tag v1.1.0 && git push origin v1.1.0
+```
+
+GitHub Actions (`.github/workflows/release.yml`) compila en Windows y adjunta el zip a la release, con
+`notas-version.txt` como descripción. Local: `npm run dist && npm run paquete` deja el zip en `release\`.
+`release/` y `samples/` siguen en `.gitignore` (nunca se suben).
+
 ## Instalar y actualizar
 
 **Instalar (una vez):** corre `npm run dist` y abre `release\Instalar Flujo.cmd` (doble clic). Copia Flujo a
@@ -192,5 +211,6 @@ Una sola gráfica de tiempo (`components/GraficaTiempo.tsx`) sirve a las tres pe
   promedio; también «Por concepto» y «Descuentos» apilados. La liquidación del ahorro se marca aparte.
 - **Para revisar** es una campana en el encabezado (`components/Avisos.tsx`).
 - En Cuentas, el ícono de cada movimiento es el botón para cambiar su categoría.
-#   f l o w  
+#   f l o w 
+ 
  

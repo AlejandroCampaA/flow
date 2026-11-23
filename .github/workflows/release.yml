@@ -1,0 +1,34 @@
+name: Publicar release
+
+# Al subir una etiqueta v* (p. ej. v1.1.0) compila en Windows y adjunta el zip a la página de Releases.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx electron-vite build
+      - run: node scripts/sello.mjs
+      - run: npx electron-builder --win dir
+      - run: node scripts/publicar.mjs --instalador
+      - run: node scripts/paquete.mjs
+      - name: Crear release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          gh release create "${GITHUB_REF_NAME:-v$VERSION}" "release/Flujo-$VERSION-Windows.zip" \
+            --title "Flujo $VERSION" --notes-file notas-version.txt

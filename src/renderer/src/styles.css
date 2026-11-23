@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens (RGB) inspirados en Material Design 3: superficies tonales en lugar de bordes,
+ * un color primario (verde azulado) y neutros fríos.
+ *  page    = surface (fondo)            surface = surface-container-lowest (tarjetas)
+ *  raised  = surface-container          high    = surface-container-high
+ *  line    = outline-variant            outline = outline
+ *  accent  = primary                    accentc = primary-container
+ */
+:root {
+  color-scheme: light;
+  --page: 243 245 246;
+  --surface: 255 255 255;
+  --raised: 236 239 241;
+  --high: 226 230 233;
+  --line: 223 227 230;
+  --outline: 192 199 204;
+  --ink: 25 28 30;
+  --ink2: 64 72 78;
+  --muted: 112 121 127;
+  --accent: 0 105 92;
+  --accentc: 196 234 226;
+  --onaccentc: 0 32 27;
+  --good: 22 124 58;
+  --warn: 196 126 0;
+  --bad: 186 26 26;
+  --shadow: 16 24 32;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: 16 19 20;
+  --surface: 25 28 30;
+  --raised: 33 37 39;
+  --high: 43 47 50;
+  --line: 47 52 55;
+  --outline: 82 90 96;
+  --ink: 225 228 230;
+  --ink2: 190 198 203;
+  --muted: 137 146 152;
+  --accent: 128 213 200;
+  --accentc: 0 80 72;
+  --onaccentc: 156 242 228;
+  --good: 120 217 144;
+  --warn: 245 190 80;
+  --bad: 255 180 171;
+  --shadow: 0 0 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--page));
+  color: rgb(var(--ink));
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum' 0;
+}
+
+/* Cifras: tipografía "Display" de Windows 11 y números tabulares */
+.cifra {
+  font-family: 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--outline) / 0.6);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--outline));
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+@layer components {
+  /* Tabla de datos (Material 3): encabezado discreto, filas de 48px, divisores finos */
+  .tabla {
+    @apply w-full border-collapse text-[13.5px];
+    font-variant-numeric: tabular-nums;
+  }
+  .tabla thead th {
+    @apply h-10 whitespace-nowrap border-b border-line px-3 text-left text-[12px] font-medium text-muted;
+  }
+  .tabla tbody td {
+    @apply h-12 border-b border-line px-3 text-ink2;
+  }
+  .tabla tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .tabla tbody tr.fila-clic {
+    @apply cursor-pointer transition-colors hover:bg-raised/70;
+  }
+  .tabla .num {
+    @apply text-right;
+  }
+  .campo {
+    @apply h-9 rounded-xl border border-line bg-surface px-3 text-[13.5px] text-ink outline-none transition placeholder:text-muted hover:border-outline focus:border-accent;
+  }
+}
